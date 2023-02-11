@@ -1,5 +1,5 @@
 import { Line } from 'react-chartjs-2';
-
+import { useState,useEffect } from 'react';
 import {
   Chart as Chartjs,
   LineElement,
@@ -17,12 +17,30 @@ Chartjs.register(
 
 
 function ChartTest() {
+  const [numbers, setNumbers] = useState([]);
+  const MINUTE_MS = 60000;
+  useEffect(() => {
+    
+    async function fetchData() {
+      fetch("/vals").then(
+        res => res.json()
+      ).then(
+        data => {
+          setNumbers(data)
+          console.log(data)
+        }
+      )
+    }
+    
+    fetchData();
+  },[]);
+
 
   const data = {
-    labels: ['Mon','Tue','Wed'],
+    labels: ['Mon','Tue','Wed','Mon','Tue','Wed','Mon','Tue','Wed'],
     datasets: [{
       labels: 'Sales',
-      data: [3,6,1,9],
+      data: numbers,
       backgroundColor: 'red',
       borderColor: 'blue',
       tension: 0.5
@@ -35,8 +53,8 @@ function ChartTest() {
     },
     scales : {
       y: {
-        min: 3,
-        max: 15
+        min: 0,
+        max: 7
       }
     }
   }
