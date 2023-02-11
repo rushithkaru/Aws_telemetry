@@ -19,7 +19,9 @@ Chartjs.register(
 
 function ChartTest() {
   const [numbers, setNumbers] = useState([]);
+  const [d,setD] = useState([]);
   const MINUTE_MS = 60000;
+  const tel = [];
   useEffect(() => {
     
     async function fetchData() {
@@ -32,10 +34,21 @@ function ChartTest() {
         }
       )
     }
+    async function getData() {
+      fetch("/get-items").then(
+        res => res.json()
+      ).then(
+        data => {
+          setD(data)
+          
+        }
+      )
+    }
+    
     const intervalId = setInterval(async () => {
       fetchData();
-      
-    }, 3000);
+      getData();
+    }, 1000);
     
     return () => {
       clearInterval(intervalId);
@@ -47,7 +60,7 @@ function ChartTest() {
     labels: ['Mon','Tue','Wed','Mon','Tue','Wed','Mon','Tue','Wed'],
     datasets: [{
       labels: 'Sales',
-      data: numbers,
+      data: d,
       backgroundColor: 'red',
       borderColor: 'blue',
       tension: 0.5,
