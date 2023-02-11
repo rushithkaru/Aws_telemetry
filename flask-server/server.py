@@ -3,6 +3,16 @@ from flask import jsonify
 import random
 app = Flask(__name__)
 
+
+@app.route('/')
+def index():
+    return "This is the main page."
+
+@app.route('/get-items')
+def get_items():
+    return jsonify(get_items())
+
+
 @app.route("/vals", methods=['GET', 'POST'])
 def vals():
     """data = request.args.getlist('user', type=int)

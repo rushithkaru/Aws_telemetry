@@ -5,7 +5,8 @@ import {
   LineElement,
   CategoryScale,
   LinearScale,
-  PointElement
+  PointElement,
+  Title
 } from 'chart.js';
 
 Chartjs.register(
@@ -27,12 +28,18 @@ function ChartTest() {
       ).then(
         data => {
           setNumbers(data)
-          console.log(data)
+          
         }
       )
     }
+    const intervalId = setInterval(async () => {
+      fetchData();
+      
+    }, 3000);
     
-    fetchData();
+    return () => {
+      clearInterval(intervalId);
+    };
   },[]);
 
 
@@ -43,7 +50,8 @@ function ChartTest() {
       data: numbers,
       backgroundColor: 'red',
       borderColor: 'blue',
-      tension: 0.5
+      tension: 0.5,
+      fill: true
     }]
   }
 
@@ -56,16 +64,21 @@ function ChartTest() {
         min: 0,
         max: 7
       }
+    },
+    title : {
+      display: true,
+      text: "hi"
     }
   }
 
   return (
-    <div className="App">
-      <h>Hii</h>
+    <div>
+
       <div style={
         {
-        width: '500px',
-        height: '600px'
+        width: '400px',
+        height: '200px',
+        backgroundColor: 'rgb(133, 227, 246)'
         }
       }>
       <Line 

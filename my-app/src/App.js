@@ -1,15 +1,20 @@
 import React from 'react';
 import './App.css';
 import ChartTest from './components/ChartTest';
-import Test from './components/Test'
+import Test from './components/Test';
+import ChartContainer from './components/ChartContainer'
 
 function App() {
   return (
-    <div className="App">
-      <h1>Hi there</h1>
-      <Test></Test>
-      <ChartTest></ChartTest>
+    <div >
+      <h1 style={{ backgroundColor: 'blue' }}>ESP32 telemetry</h1>
+      <div style={{ height: '100%', minHeight: '400px', width: '100%' }}><ChartContainer></ChartContainer></div>
+      <div style={{ height: '100%', minHeight: '400px', width: '100%' }}><ChartContainer></ChartContainer></div>
+      <div style={{ height: '100%', minHeight: '400px', width: '100%' }}><ChartContainer></ChartContainer></div>
+      
     </div>
+    
+    
   );
 }
 
