@@ -11,4 +11,4 @@ So far everything works but I want to make clean up the UI and optimise.
 
 
 
-<img width="543" alt="Screen Shot 2023-02-12 at 1 56 22 pm" src="https://user-images.githubusercontent.com/30048959/218290380-9bd9fd7e-b4cb-4dc6-948a-2ecea436f820.png">
+<img width="1101" alt="Screen Shot 2023-02-12 at 6 49 35 pm" src="https://user-images.githubusercontent.com/30048959/218299361-5523a920-393d-420b-aed7-ce894eb9bb28.png">
