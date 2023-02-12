@@ -81,7 +81,7 @@ function ChartTest(props) {
       },
       title: {
         display: true,
-        text: 'Device 1',
+        text: 'Device ' + props.deviceNum,
       },
       
    
@@ -102,7 +102,7 @@ function ChartTest(props) {
         {
         width: '400px',
         height: '200px',
-        backgroundColor: 'rgb(133, 227, 246)',
+        backgroundColor: 'beige',
         borderRadius: '20px',
         border: '2px solid ' + props.colorS,
         
