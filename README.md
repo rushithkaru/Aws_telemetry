@@ -1,4 +1,5 @@
 # Aws_telemetry
+(WIP)
 Repo for storing my iot project
 
 Using and esp32 as an IoT device that uploads data to the cloud. Using the MQTT protocol and an AWS IoT core rule to push the telemtry data to dynamoDB. 
