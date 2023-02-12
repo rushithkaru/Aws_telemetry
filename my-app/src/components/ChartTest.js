@@ -6,18 +6,23 @@ import {
   CategoryScale,
   LinearScale,
   PointElement,
-  Title
+  Legend,
+  Tooltip,
+  Title,
 } from 'chart.js';
 
 Chartjs.register(
   LineElement,
   CategoryScale,
   LinearScale,
-  PointElement
+  PointElement,
+  Legend,
+  Tooltip,
+  Title
 )
 
 
-function ChartTest() {
+function ChartTest(props) {
   const [numbers, setNumbers] = useState([]);
   const [d,setD] = useState([]);
   const MINUTE_MS = 60000;
@@ -25,6 +30,7 @@ function ChartTest() {
   useEffect(() => {
     
     async function fetchData() {
+      console.log(props.colorS);
       fetch("/vals").then(
         res => res.json()
       ).then(
@@ -57,9 +63,9 @@ function ChartTest() {
 
 
   const data = {
-    labels: ['Mon','Tue','Wed','Mon','Tue','Wed','Mon','Tue','Wed'],
+    labels: ['0','1','2','3','4','5','6','7','8'],
     datasets: [{
-      labels: 'Sales',
+      label: 'Voltage',
       data: d,
       backgroundColor: 'red',
       borderColor: 'blue',
@@ -69,8 +75,16 @@ function ChartTest() {
   }
 
   const options = {
-    plugins : {
-      legend : true
+    plugins: {
+      legend: {
+        position: 'top',
+      },
+      title: {
+        display: true,
+        text: 'Device 1',
+      },
+      
+   
     },
     scales : {
       y: {
@@ -78,20 +92,20 @@ function ChartTest() {
         max: 7
       }
     },
-    title : {
-      display: true,
-      text: "hi"
-    }
+   
   }
 
   return (
-    <div>
+   
 
       <div style={
         {
         width: '400px',
         height: '200px',
-        backgroundColor: 'rgb(133, 227, 246)'
+        backgroundColor: 'rgb(133, 227, 246)',
+        borderRadius: '20px',
+        border: '2px solid ' + props.colorS,
+        
         }
       }>
       <Line 
@@ -100,7 +114,7 @@ function ChartTest() {
       >
       </Line>
       </div>
-    </div>
+    
   );
 }
 
