@@ -6,8 +6,9 @@ For visualising the data I am using a flask app and the boto3 library to pull da
 So far everything works but I want to make clean up the UI and optimise.
 
 
+![flow](https://user-images.githubusercontent.com/30048959/218290869-1a5877f9-344a-488f-babe-6cc64bf0318e.jpg)
 
-[flow.drawio (1).pdf](https://github.com/rushithkaru/Aws_telemetry/files/10715201/flow.drawio.1.pdf)
+
 
 
 <img width="543" alt="Screen Shot 2023-02-12 at 1 56 22 pm" src="https://user-images.githubusercontent.com/30048959/218290380-9bd9fd7e-b4cb-4dc6-948a-2ecea436f820.png">
