@@ -1,0 +1,12 @@
+{
+	"folders": [
+		{
+			"path": "../../../../Documents/PlatformIO/Projects/ESP_test"
+		},
+		{
+			"name": "Firmware",
+			"path": "."
+		}
+	],
+	"settings": {}
+}
