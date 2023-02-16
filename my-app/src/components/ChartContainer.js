@@ -5,10 +5,15 @@ import { Button, Modal, Accordion, InputGroup, FormControl, Form, Spinner, Table
 function ChartContainer(props){
     const [borderColorChart,setBorderColorChart] =  useState("green");
     const [buttonMess,setButtonMess] = useState("Pause Device");
-    const  handlePause = () => {
+    const  handlePause = async () => {
+        fetch("/pause").then(
+            res => console.log(res)
+          );
         if (borderColorChart == 'green'){
             setBorderColorChart('red');
-            setButtonMess("Restart Device")
+            setButtonMess("Restart Device");
+            
+                
         }
         else{
             setBorderColorChart('green');
