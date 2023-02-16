@@ -16,4 +16,5 @@ So far everything works but I want to make clean up the UI and optimise.
 
 
 
-![Uploading Screen Shot 2023-02-16 at 10.34.44 pm.png…]()
+
+<img width="1234" alt="Screen Shot 2023-02-16 at 10 34 44 pm" src="https://user-images.githubusercontent.com/30048959/219363007-35bf53ae-bfff-4236-ac34-37887eb67b0c.png">
