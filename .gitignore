@@ -2,3 +2,4 @@ Certs/
 .DS_Store
 myvenv
 __pycache__
+firmware/src/certs.hpp
