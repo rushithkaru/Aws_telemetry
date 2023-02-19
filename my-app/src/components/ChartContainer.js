@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import ChartTest from './ChartTest';
+import Chart from './Chart';
 import { Button, Modal, Accordion, InputGroup, FormControl, Form, Spinner, Table} from 'react-bootstrap';
 
 function ChartContainer(props){
@@ -25,7 +25,7 @@ function ChartContainer(props){
     return (
         <div style={{ display: 'flex', width: '100%', flexDirection: "column", alignItems: "center" }}>
 
-            <ChartTest colorS={borderColorChart} deviceNum = {props.deviceNum}  ></ChartTest>
+            <Chart colorS={borderColorChart} deviceNum = {props.deviceNum}  ></Chart>
             
             <Button style={{ width: "10%"}} onClick={() => handlePause()}>{buttonMess}</Button>
         </div>

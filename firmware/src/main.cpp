@@ -1,19 +1,23 @@
-/
+
 #include <Arduino.h>
 #include <WiFiClientSecure.h>
-#include <PubSubClient.h> // install with Library Manager, I used v2.6.0
+#include <PubSubClient.h> 
 #include "certs.hpp"
+
+//TO DO add blocking (can add a new array with blocked ids read through a new Freertos task.)
 
 void pubSubCheckConnect();
 void msgReceived(char* topic, byte* payload, unsigned int length);
 
 
-
+const int led1 = 2; // Pin of the LED
 
 
 WiFiClientSecure wiFiClient;
 void msgReceived(char* topic, byte* payload, unsigned int len);
 PubSubClient pubSubClient(awsEndpoint, 8883, msgReceived, wiFiClient); 
+boolean sendData(int deviceID, char *fakeData);
+void toggleLED(void * parameter);
 
 void setup() {
   Serial.begin(115200); delay(50); Serial.println();
@@ -28,11 +32,22 @@ void setup() {
   wiFiClient.setCACert(rootCA);
   wiFiClient.setCertificate(certificate_pem_crt);
   wiFiClient.setPrivateKey(private_pem_key);
+  
+  pinMode(led1, OUTPUT);
+  xTaskCreate(
+    toggleLED,    // Function that should be called
+    "Toggle LED",   // Name of the task (for debugging)
+    1000,            // Stack size (bytes)
+    NULL,            // Parameter to pass
+    1,               // Task priority
+    NULL             // Task handle
+  );
+
 }
 
 unsigned long lastPublish;
 int msgCount;
-
+int simulator = 0;
 void loop() {
 
   pubSubCheckConnect();
@@ -60,12 +75,32 @@ void loop() {
 
 
   if (millis() - lastPublish > 10000) {
-  boolean rc = pubSubClient.publish("aws/outTopic", fakeData);
-    Serial.print("Published, rc="); Serial.print( (rc ? "OK: " : "FAILED: ") );
-    Serial.println(fakeData);
-    lastPublish = millis();
+    if (simulator == 0){
+      sendData(simulator,fakeData,0);
+      lastPublish = millis();
+      simulator = 1;
+    }
+    else if (simulator == 1){
+      sendData(simulator,fakeData,0);
+      lastPublish = millis();
+      simulator = 2;
+    }
+    else{
+      sendData(simulator,fakeData,0);
+      lastPublish = millis();
+      simulator = 0;
+    }
+    
     
   }
+}
+
+boolean sendData(int deviceID, char *fakeData,int blocked){
+      boolean rc = pubSubClient.publish("aws/device1", fakeData);
+      Serial.print("Published, rc="); Serial.print( (rc ? "OK: " : "FAILED: ") );
+      Serial.println(fakeData);
+
+      return rc ? true : false;
 }
 
 void msgReceived(char* topic, byte* payload, unsigned int length) {
@@ -88,4 +123,21 @@ void pubSubCheckConnect() {
     pubSubClient.subscribe("aws/pause");
   }
   pubSubClient.loop();
+}
+
+void toggleLED(void * parameter){
+  for(;;){ // infinite loop
+
+    // Turn the LED on
+    digitalWrite(led1, HIGH);
+
+    // Pause the task for 500ms
+    vTaskDelay(500 / portTICK_PERIOD_MS);
+
+    // Turn the LED off
+    digitalWrite(led1, LOW);
+
+    // Pause the task again for 500ms
+    vTaskDelay(500 / portTICK_PERIOD_MS);
+  }
 }

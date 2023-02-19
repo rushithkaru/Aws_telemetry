@@ -22,7 +22,7 @@ Chartjs.register(
 )
 
 
-function ChartTest(props) {
+function Chart(props) {
   const [numbers, setNumbers] = useState([]);
   const [d,setD] = useState([]);
   const MINUTE_MS = 60000;
@@ -30,7 +30,6 @@ function ChartTest(props) {
   useEffect(() => {
     
     async function fetchData() {
-      console.log(props.colorS);
       fetch("/vals").then(
         res => res.json()
       ).then(
@@ -118,4 +117,4 @@ function ChartTest(props) {
   );
 }
 
-export default ChartTest;
+export default Chart;
