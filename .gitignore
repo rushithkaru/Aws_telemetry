@@ -1,5 +1,5 @@
 Certs/
 .DS_Store
-myvenv
+flask-server/myvenv
 __pycache__
 firmware/src/certs.hpp
