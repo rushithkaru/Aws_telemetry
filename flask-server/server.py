@@ -15,7 +15,7 @@ PATH_TO_CERTIFICATE = "certs/device.pem.crt"
 PATH_TO_PRIVATE_KEY = "certs/private.pem.key"
 PATH_TO_AMAZON_ROOT_CA_1 = "certs/root.pem"
 MESSAGE = "Hello World"
-TOPIC = "test/testing"
+TOPIC = "aws/pause"
 RANGE = 20
 event_loop_group = io.EventLoopGroup(1)
 host_resolver = io.DefaultHostResolver(event_loop_group)
@@ -48,10 +48,19 @@ def createList(resp):
         arr.append(int(resp['v'+str(i+1)]['N']))
     return arr
 
-#get data from dynamodb
-@app.route('/get-items')
+#get data from dynamodb for device 1
+@app.route('/get-items',methods=['GET', 'POST'])
 def get_items():
-    resp = dynamo_client.get_item(TableName = 'esp32Data' , Key = {'device_id':{'S':'3dssac-csd'}})
+    req = request.get_json()
+    print(req)
+    
+    if req == 1:
+        tbl =  'esp32Data'    
+    elif req == 2:
+        tbl = 'device2'
+    else:
+        tbl = 'device3'
+    resp = dynamo_client.get_item(TableName = tbl , Key = {'device_id':{'S':'3dssac-csd'}})
     resp = resp["Item"]["payload"]["M"]
     resp = createList(resp)
     return jsonify(resp)
@@ -64,9 +73,10 @@ def vals():
         data[i] = random.randint(0,7)
     return jsonify(data)
 
-@app.route("/pause")
+@app.route("/pause", methods=['GET', 'POST'])
 def pause():
-    data = "{} [{}]".format("pause device", 1)
+    req = request.get_json()
+    data = "{}{}".format("pause",req)
     message = {"message" : data}
     mqtt_connection.publish(topic=TOPIC, payload=json.dumps(message), qos=mqtt.QoS.AT_LEAST_ONCE)
     print("Published: '" + json.dumps(message) + "' to the topic: " + "'test/testing'")

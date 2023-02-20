@@ -10,18 +10,19 @@ void pubSubCheckConnect();
 void msgReceived(char* topic, byte* payload, unsigned int length);
 
 
-const int led1 = 2; // Pin of the LED
-
+const int led1 = 2; // Pin of the LED (built in)
+int blocks[3] = {0,0,0};
 
 WiFiClientSecure wiFiClient;
-void msgReceived(char* topic, byte* payload, unsigned int len);
+
 PubSubClient pubSubClient(awsEndpoint, 8883, msgReceived, wiFiClient); 
-boolean sendData(int deviceID, char *fakeData);
+void sendData(int deviceID, char *fakeData,int blocked);
 void toggleLED(void * parameter);
+void pauseDevice(byte* payload, unsigned int length);
 
 void setup() {
   Serial.begin(115200); delay(50); Serial.println();
-  Serial.println("ESP32 AWS IoT Example");
+  
   Serial.printf("SDK version: %s\n", ESP.getSdkVersion());
 
   Serial.print("Connecting to "); Serial.print(ssid);
@@ -42,6 +43,8 @@ void setup() {
     1,               // Task priority
     NULL             // Task handle
   );
+
+  
 
 }
 
@@ -76,17 +79,17 @@ void loop() {
 
   if (millis() - lastPublish > 10000) {
     if (simulator == 0){
-      sendData(simulator,fakeData,0);
+      sendData(simulator,fakeData,blocks[0]);
       lastPublish = millis();
       simulator = 1;
     }
     else if (simulator == 1){
-      sendData(simulator,fakeData,0);
+      sendData(simulator,fakeData,blocks[1]);
       lastPublish = millis();
       simulator = 2;
     }
     else{
-      sendData(simulator,fakeData,0);
+      sendData(simulator,fakeData,blocks[2]);
       lastPublish = millis();
       simulator = 0;
     }
@@ -95,18 +98,31 @@ void loop() {
   }
 }
 
-boolean sendData(int deviceID, char *fakeData,int blocked){
-      boolean rc = pubSubClient.publish("aws/device1", fakeData);
-      Serial.print("Published, rc="); Serial.print( (rc ? "OK: " : "FAILED: ") );
-      Serial.println(fakeData);
+void sendData(int deviceID, char *fakeData,int blocked){
+      
+      if (!blocked){
+        char topic[20];
+        sprintf(topic, "aws/device%d", deviceID+1);
+        Serial.println(topic);
+        boolean rc = pubSubClient.publish(topic, fakeData);
+        Serial.print("Published, rc="); Serial.print( (rc ? "OK: " : "FAILED: ") );
+        Serial.println(fakeData);
+      }
+      else{
+        char device[20];
+        sprintf(device, "device%d is blocked", deviceID);
+        Serial.println("");
+      }
+      
 
-      return rc ? true : false;
+      
 }
 
 void msgReceived(char* topic, byte* payload, unsigned int length) {
   Serial.print("Message received on "); Serial.print(topic); Serial.print(": ");
   for (int i = 0; i < length; i++) {
     Serial.print((char)payload[i]);
+    //pauseDevice(payload,length);
   }
   Serial.println();
 }
@@ -120,7 +136,7 @@ void pubSubCheckConnect() {
       delay(1000);
     }
     Serial.println(" connected");
-    pubSubClient.subscribe("aws/pause");
+    pubSubClient.subscribe("aws/device1");
   }
   pubSubClient.loop();
 }
@@ -141,3 +157,28 @@ void toggleLED(void * parameter){
     vTaskDelay(500 / portTICK_PERIOD_MS);
   }
 }
+
+void pauseDevice(byte* payload, unsigned int length){
+  String str = "";
+
+  for (int i = 0; i < length; i++) {
+    str += (char)payload[i];
+  }
+  if (str.equals("pause1")){
+    Serial.println("Blocking device 1");
+    blocks[0] = 1;
+  }
+  else if (str.equals("pause2")){
+    Serial.println("Blocking device 2");
+    blocks[1] = 1;
+  }
+  else if (str.equals("pause2")){
+    Serial.println("Blocking device 3");
+    blocks[2] = 2;
+  }
+  else{
+    Serial.println("invalid message");
+  }
+
+}
+

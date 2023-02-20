@@ -6,7 +6,13 @@ function ChartContainer(props){
     const [borderColorChart,setBorderColorChart] =  useState("green");
     const [buttonMess,setButtonMess] = useState("Pause Device");
     const  handlePause = async () => {
-        fetch("/pause").then(
+        fetch("/pause",{
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(props.deviceNum),
+        }).then(
             res => console.log(res)
           );
         if (borderColorChart == 'green'){

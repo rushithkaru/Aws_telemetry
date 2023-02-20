@@ -40,7 +40,13 @@ function Chart(props) {
       )
     }
     async function getData() {
-      fetch("/get-items").then(
+      fetch("/get-items",{
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(props.deviceNum),
+    }).then(
         res => res.json()
       ).then(
         data => {
