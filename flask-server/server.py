@@ -8,6 +8,11 @@ from awsiot import mqtt_connection_builder
 import time as t
 import json
 from Device import Device
+from json import JSONEncoder
+
+class CustomEncoder(json.JSONEncoder):
+    def default(self, o):
+            return o.__dict__
 
 # Define ENDPOINT, CLIENT_ID, PATH_TO_CERTIFICATE, PATH_TO_PRIVATE_KEY, PATH_TO_AMAZON_ROOT_CA_1, MESSAGE, TOPIC, and RANGE
 ENDPOINT = "a38xfqb9loacgl-ats.iot.ap-south-1.amazonaws.com"
@@ -100,19 +105,28 @@ def creat_device():
     d3 = Device(3,0,0,1)
     d4 = Device(4,1,0,0)
     d5 = Device(5,1,1,0)
-    d6 = Device(6,1,0,0)
+    d6 = Device(6,0,0,0)
     d7 = Device(7,0,0,0)
     d8 = Device(8,0,0,0)
     d9 = Device(9,1,1,0)
     d10 = Device(10,1,0,0)
 
-    devices = [d1.toJSON(),d2.toJSON(),d3.toJSON(),d4.toJSON(),d5.toJSON(),d6.toJSON(),d7.toJSON(),d8.toJSON(),d9.toJSON(),d10.toJSON()]
-    return devices
+    devs = []
+
+    
+    #devices = [d1.toJSON(),d2.toJSON(),d3.toJSON(),d4.toJSON(),d5.toJSON(),d6.toJSON(),d7.toJSON(),d8.toJSON(),d9.toJSON(),d10.toJSON()]
+    devices = [d1,d2,d3,d4,d5,d6,d7,d8,d9,d10]
+    for i in range(10):
+        devs.append(json.dumps(devices[i], indent=4, cls=CustomEncoder))
+    print(devs[0].__class__)
+    return devs
 
 
 @app.route("/devices",methods=['GET'])
 def send_devices():
-    return jsonify(creat_device())
+    devs = creat_device()
+    #json_string = json.dumps([ob for ob in devs])
+    return json.dumps(devs,indent=4, cls=CustomEncoder)
 
 
 if __name__ == "__main__":

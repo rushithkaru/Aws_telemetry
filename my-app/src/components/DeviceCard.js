@@ -8,10 +8,23 @@ function DeviceCard(props) {
     <div className='card'  style={{backgroundColor: 'grey', borderRadius: '20px'}}>
         <div className='card-title'></div>
             <div className='card-body'></div>
-
-        <p>{props.deviceData}
-        </p>
-        <div className="card__image"><img src={rasp} alt="esp"/></div>
+        <div className="card__title">
+            <h5>
+            Device {props.deviceData.id}
+            </h5>
+        </div>
+        <div className="card__body" style={{color: 'black'}}>
+            {props.deviceData.id == 1 ? <p>Device: Raspberry Pi 4</p> : <p>Device: ESP32</p>}
+            {props.deviceData.greengrass == 1 ?     
+                <div className='card_button' style={{color: 'lime'}}>
+                    <p>Green Grass Device</p> <button style={{color: 'green', borderRadius: '20px'}}>Update Firmware</button>
+                </div> : <></>
+            }
+        </div>
+       
+        <div className="card__image">
+           {props.deviceData.device == 1 ? < img src={rasp}   alt="esp"/> : < img src={esp}   alt="esp"/>}
+        </div>
     </div>
   )
 }

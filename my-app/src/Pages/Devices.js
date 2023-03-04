@@ -9,7 +9,13 @@ function Devices() {
   useEffect(() => {
     fetch('/devices')
       .then(response => response.json())
-      .then((data) => {data = JSON.parse(data); setDevices(data); console.log(typeof data[0]); });
+      .then((data) => { 
+        const devs = []
+        for (let i = 0; i < 10 ; i++){
+          devs.push(JSON.parse(data[i]));
+        }
+        setDevices(devs); console.log(devs); 
+      });
   }, []);
 
   return (
@@ -21,13 +27,6 @@ function Devices() {
           {devices.map((device,id) => (
             <DeviceCard key={id} deviceData={device}/>
           ))}
-          <DeviceCard></DeviceCard>
-          <DeviceCard></DeviceCard>
-          <DeviceCard></DeviceCard>
-          <DeviceCard></DeviceCard>
-          <DeviceCard></DeviceCard>
-          <DeviceCard></DeviceCard>
-          <DeviceCard></DeviceCard>
           
         </div>
         
