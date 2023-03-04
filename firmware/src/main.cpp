@@ -164,6 +164,7 @@ void pauseDevice(byte* payload, unsigned int length){
   for (int i = 0; i < length; i++) {
     str += (char)payload[i];
   }
+  Serial.println(str);
   if (str.equals("pause1")){
     Serial.println("Blocking device 1");
     blocks[0] = 1;

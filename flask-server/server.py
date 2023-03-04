@@ -7,6 +7,7 @@ from awscrt import io, mqtt, auth, http
 from awsiot import mqtt_connection_builder
 import time as t
 import json
+from Device import Device
 
 # Define ENDPOINT, CLIENT_ID, PATH_TO_CERTIFICATE, PATH_TO_PRIVATE_KEY, PATH_TO_AMAZON_ROOT_CA_1, MESSAGE, TOPIC, and RANGE
 ENDPOINT = "a38xfqb9loacgl-ats.iot.ap-south-1.amazonaws.com"
@@ -92,6 +93,26 @@ def get_mapdata():
 
     # return list of dictionaries as a JSON response
     return jsonify(lat_long_dict)
+
+def creat_device():
+    d1 = Device(1,1,1,1)
+    d2 = Device(2,0,0,1)
+    d3 = Device(3,0,0,1)
+    d4 = Device(4,1,0,0)
+    d5 = Device(5,1,1,0)
+    d6 = Device(6,1,0,0)
+    d7 = Device(7,0,0,0)
+    d8 = Device(8,0,0,0)
+    d9 = Device(9,1,1,0)
+    d10 = Device(10,1,0,0)
+
+    devices = [d1.toJSON(),d2.toJSON(),d3.toJSON(),d4.toJSON(),d5.toJSON(),d6.toJSON(),d7.toJSON(),d8.toJSON(),d9.toJSON(),d10.toJSON()]
+    return devices
+
+
+@app.route("/devices",methods=['GET'])
+def send_devices():
+    return jsonify(creat_device())
 
 
 if __name__ == "__main__":
