@@ -5,6 +5,12 @@ import { useState, useEffect } from "react"
 
 function Devices() {
   const [devices,setDevices] = useState([]);
+  const [filter,setFilter] = useState('All Devices');
+  
+  
+    const handleOptionChange = (event) => {
+        setFilter(event.target.value);
+      };
 
   useEffect(() => {
     fetch('/devices')
@@ -21,8 +27,17 @@ function Devices() {
   return (
     <div>
         <h1>
-            Select device for home page
+            Configure Devices
         </h1>
+        <label>
+            Select an option  :
+            <select value={filter} onChange={handleOptionChange}>
+            <option value="All devices">All Devices</option>
+            <option value="esp32">ESP32</option>
+            <option value="raspberrypis">Raspberry pis</option>
+            </select>
+        </label>
+        <p>Showing you: {filter}</p>
         <div className='cards-container' >
           {devices.map((device,id) => (
             <DeviceCard key={id} deviceData={device}/>

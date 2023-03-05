@@ -43,3 +43,11 @@
 .cars-button {
     color: 'green';
 }
+
+.small-data {
+    font-style: italic;
+    font-size: .8rem;
+    margin: 0;
+    margin-top: 25px;
+
+}

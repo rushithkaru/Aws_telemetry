@@ -2,10 +2,17 @@ import React from 'react'
 import '../css/Card.css'
 import esp from '../imgs/esp32.jpeg'
 import rasp from '../imgs/raspberry.jpeg'
+import { useState, useEffect } from "react"
+
+
 
 function DeviceCard(props) {
-  return (
+  
+
+      
+    return (
     <div className='card'  style={{backgroundColor: 'grey', borderRadius: '20px'}}>
+        
         <div className='card-title'></div>
             <div className='card-body'></div>
         <div className="card__title">
@@ -18,8 +25,21 @@ function DeviceCard(props) {
             {props.deviceData.greengrass == 1 ?     
                 <div className='card_button' style={{color: 'lime'}}>
                     <p>Green Grass Device</p> <button style={{color: 'green', borderRadius: '20px'}}>Update Firmware</button>
-                </div> : <></>
+                </div> : 
+            <div>
+                <label>
+                    <input
+                    type="checkbox"
+                    />
+                    Show on home page
+                </label>
+            </div>
             }
+            </div>
+        <div className='small-data'>
+            <p>Device Connected</p>
+            {props.deviceData.device == 0 ? <p>Protocol: MQTT</p> : <></>}
+
         </div>
        
         <div className="card__image">
