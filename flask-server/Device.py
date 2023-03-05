@@ -1,3 +1,4 @@
+#Class for device data
 import json
 class Device:
     def __init__(self,id,device,greengrass,homepage) -> None:

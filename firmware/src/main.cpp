@@ -2,6 +2,7 @@
 #include <Arduino.h>
 #include <WiFiClientSecure.h>
 #include <PubSubClient.h> 
+//Import certificates. (KEEP hidden)
 #include "certs.hpp"
 
 //TO DO add blocking (can add a new array with blocked ids read through a new Freertos task.)
@@ -61,7 +62,7 @@ void loop() {
   int lower = 1, upper = 6, count = 10;
 
   srand(time(0));
-  
+  //Generate fake data
   int var1 = (rand() % (upper - lower + 1)) + lower;
   int var2 = (rand() % (upper - lower + 1)) + lower;
   int var3 = (rand() % (upper - lower + 1)) + lower;
@@ -72,7 +73,7 @@ void loop() {
   int var8 = (rand() % (upper - lower + 1)) + lower;
   int var9 = (rand() % (upper - lower + 1)) + lower;
   
-  
+  //add to variable
   sprintf(fakeData,  "{\"device_id\": \"%s\",\"v1\": %d,\"v2\": %d,\"v3\": %d,\"v4\": %d,\"v5\": %d,\"v6\": %d,\"v7\": %d,\"v8\": %d,\"v9\": %d}", "3dssac-csd", var1, var2, var3, var4, var5, var6, var7, var8, var9);
  
 
@@ -98,6 +99,7 @@ void loop() {
   }
 }
 
+//Send the data over MQTT topic to AWS Iot core broker
 void sendData(int deviceID, char *fakeData,int blocked){
       
       if (!blocked){
@@ -112,12 +114,10 @@ void sendData(int deviceID, char *fakeData,int blocked){
         char device[20];
         sprintf(device, "device%d is blocked", deviceID);
         Serial.println("");
-      }
-      
-
-      
+      }   
 }
 
+//on device subscriber
 void msgReceived(char* topic, byte* payload, unsigned int length) {
   Serial.print("Message received on "); Serial.print(topic); Serial.print(": ");
   for (int i = 0; i < length; i++) {
@@ -141,6 +141,7 @@ void pubSubCheckConnect() {
   pubSubClient.loop();
 }
 
+//Toggle LED. Only for testing FreeRTOS. But also helps to know if the code is working
 void toggleLED(void * parameter){
   for(;;){ // infinite loop
 
@@ -158,6 +159,8 @@ void toggleLED(void * parameter){
   }
 }
 
+//WIP: pause device when clicked on front end.
+//Might make a task but not sure if it makes sense to.
 void pauseDevice(byte* payload, unsigned int length){
   String str = "";
 

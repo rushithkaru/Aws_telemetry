@@ -15,6 +15,8 @@ class CustomEncoder(json.JSONEncoder):
             return o.__dict__
 
 # Define ENDPOINT, CLIENT_ID, PATH_TO_CERTIFICATE, PATH_TO_PRIVATE_KEY, PATH_TO_AMAZON_ROOT_CA_1, MESSAGE, TOPIC, and RANGE
+
+#MAKE SURE CERTS ARE HIDDEN
 ENDPOINT = "a38xfqb9loacgl-ats.iot.ap-south-1.amazonaws.com"
 CLIENT_ID = "esp32"
 PATH_TO_CERTIFICATE = "certs/device.pem.crt"
@@ -37,6 +39,7 @@ mqtt_connection = mqtt_connection_builder.mtls_from_path(
             keep_alive_secs=6
             )
 
+#Client for getting data from dynamoDB
 dynamo_client = boto3.client('dynamodb')
 connect_future = mqtt_connection.connect()
 connect_future.result()
@@ -79,6 +82,7 @@ def vals():
         data[i] = random.randint(0,7)
     return jsonify(data)
 
+#Publish MQTT message to pause topic. Subscriber is the ESP32 running on FreeRTOS task which pauses activity on µ controller.
 @app.route("/pause", methods=['GET', 'POST'])
 def pause():
     req = request.get_json()
@@ -88,6 +92,7 @@ def pause():
     print("Published: '" + json.dumps(message) + "' to the topic: " + "'test/testing'")
     return "pause page"
 
+#Simulated co-ordinates for devices. Would ideally subscribe to MQTT topic here.
 @app.route("/positions", methods=['GET', 'POST'])  
 def get_mapdata():
     coordinate_list = [(-37.082617921767526, 145.36886101577723), (-38.23601914446231, 145.5899196436864), (-37.05760797882527, 145.96312240240616), (-38.282076168889936, 145.30986025535735), (-37.0823056963003, 145.77303272504085), (-37.47165750538337, 145.1517523704385), (-38.37111685332148, 144.6222362123161), (-38.06514681076868, 144.62594073938924), (-38.14984519717465, 145.0298691014988), (-38.07835452793659, 145.20644663175118)]
@@ -99,6 +104,7 @@ def get_mapdata():
     # return list of dictionaries as a JSON response
     return jsonify(lat_long_dict)
 
+#Simulate a bunch of device data
 def creat_device():
     d1 = Device(1,1,1,1)
     d2 = Device(2,0,0,1)
@@ -118,10 +124,10 @@ def creat_device():
     devices = [d1,d2,d3,d4,d5,d6,d7,d8,d9,d10]
     for i in range(10):
         devs.append(json.dumps(devices[i], indent=4, cls=CustomEncoder))
-    print(devs[0].__class__)
+    
     return devs
 
-
+#API call for device data
 @app.route("/devices",methods=['GET'])
 def send_devices():
     devs = creat_device()
