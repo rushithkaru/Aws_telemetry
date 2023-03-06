@@ -11,7 +11,7 @@ For visualising the data I am using a flask app and the boto3 library to pull da
 
 
 
-<img width="1289" alt="Screen Shot 2023-02-20 at 10 46 14 pm" src="https://user-images.githubusercontent.com/30048959/220109014-6402c45a-f16b-4e39-84de-c88d48730891.png">
+<img width="1373" alt="Screen Shot 2023-03-06 at 9 43 39 pm" src="https://user-images.githubusercontent.com/30048959/223089266-4a14c958-0c54-4f19-a2aa-1aab2488640a.png">
 
 
 
