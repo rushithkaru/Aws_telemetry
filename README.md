@@ -2,7 +2,7 @@
 (WIP)
 
 
-Using an esp32 and a raspberry pi 4 as IoT devices, AWS IoT core as an MQTT broker this project is for me to practice sending and visualising telemetry data. 
+Using an esp32 and a raspberry pi 4 as IoT devices, AWS IoT core as an MQTT broker this project is for me to practice sending and visualising telemetry data using react (Also getting better at React in general).
 For visualising the data I am using a flask app and the boto3 library to pull data from dynamodb. This then connects to a React app. The app also allows users to publish MQTT messages to the devices (example pauing the device remotely). I also plan to use AWS greengrass for the raspberry pi.
 
 
