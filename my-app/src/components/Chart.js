@@ -68,15 +68,26 @@ function Chart(props) {
 
 
   const data = {
-    labels: ['0','1','2','3','4','5','6','7','8'],
+    labels: Array.from({length: 9}, (v, i) => i+1),
     datasets: [{
-      label: 'Voltage',
+      label: 'Voltage (V)',
       data: d,
       backgroundColor: 'red',
-      borderColor: 'blue',
+      borderColor: 'rgba(75,192,192,1)',
       tension: 0.5,
       fill: true
-    }]
+    },
+    {
+      label: 'Sensor Reading',
+      //Fake data for now
+      data: [2,3,1,6,4,7,2,1,0,5,2,3,3],
+      backgroundColor: 'green',
+      borderColor: 'orange',
+      tension: 0.5,
+      fill: true
+    },
+   
+    ]
   }
 
   const options = {
@@ -91,11 +102,14 @@ function Chart(props) {
       
    
     },
-    scales : {
-      y: {
-        min: 0,
-        max: 7
-      }
+    scales: {
+      yAxes: [
+        {
+          ticks: {
+            beginAtZero: true,
+          },
+        },
+      ],
     },
    
   }
@@ -105,7 +119,7 @@ function Chart(props) {
 
       <div style={
         {
-        width: '400px',
+        width: '950px',
         height: '200px',
         backgroundColor: 'beige',
         borderRadius: '20px',
@@ -116,6 +130,7 @@ function Chart(props) {
       <Line 
       data = {data}
       options = {options}
+      width={20} height={0}
       >
       </Line>
       </div>
