@@ -1,38 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import Chart from './Chart';
+import ChartSettings from './ChartSettings';
 import { Button, Modal, Accordion, InputGroup, FormControl, Form, Spinner, Table} from 'react-bootstrap';
+import '../css/Card.css'
 function ChartContainer(props){
     const [borderColorChart,setBorderColorChart] =  useState("green");
     const [buttonMess,setButtonMess] = useState("Pause Device");
-    const  handlePause = async () => {
-        fetch("/pause",{
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(props.deviceNum),
-        }).then(
-            res => console.log(res)
-          );
-        if (borderColorChart == 'green'){
-            setBorderColorChart('red');
-            setButtonMess("Restart Device");
-            
-                
-        }
-        else{
-            setBorderColorChart('green');
-            setButtonMess("Pause Device")
-        }
-        console.log(props);
-    }
+    
+    const chooseColor = (message) => {
+        setBorderColorChart(message);
+      };
 
     return (
-        <div  style={{ display: 'flex', width: '100%', flexDirection: "column", alignItems: "center" }}>
+        <div  className='cards-container'>
 
-            <Chart colorS={borderColorChart} deviceNum = {props.deviceNum}  ></Chart>
-           
-            <Button style={{ width: "10%"}} onClick={() => handlePause()}>{buttonMess}</Button>
+            <div style={{ display: 'flex', flexDirection: "row", alignItems: "center" }}>
+                <Chart colorS={borderColorChart} deviceNum={props.deviceNum} />
+                <ChartSettings deviceNum={props.deviceNum} chooseColor= {chooseColor}></ChartSettings>
+            </div>
+
             
         </div>
         

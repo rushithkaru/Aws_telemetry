@@ -72,7 +72,7 @@ const Header = () => {
               </MenuItem>
               <MenuItem icon={<FaList />} onClick = {() => changeRoute("devices")} active={select === "devices" ? true : false}>Devices </MenuItem>
               <MenuItem icon={<FiActivity />}onClick = {() => changeRoute("signals")} active={select === "signals" ? true : false}>Signals</MenuItem>
-              <MenuItem icon={<RiPencilLine />}onClick = {() => changeRoute("file")} active={select === "file" ? true : false}>Download CSV</MenuItem>
+              <MenuItem icon={<RiPencilLine />}onClick = {() => changeRoute("file")} active={select === "file" ? true : false}>Download</MenuItem>
               <MenuItem icon={<FaGlobeAsia />} onClick = {() => changeRoute("maps")} active={select === "maps" ? true : false}>Device Map</MenuItem>
             </Menu>
           </SidebarContent>
