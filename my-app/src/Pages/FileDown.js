@@ -33,13 +33,14 @@ function FileDown() {
         </h1>
         <p>Idea is to be able to download telemtry data as a csv file from s3 bucket (AWS)</p>
 
-        <div>
+        <div style={{ display: 'flex', flexDirection: "column", alignItems: "center" }}>
+          <label>Start</label>
+          <CalendarContainer/>
+          <label>End</label>
           <CalendarContainer/>
         </div>
 
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-            <Calendar onChange={handleDateChange} value={value} />
-        </div>
+       
 
         
 
