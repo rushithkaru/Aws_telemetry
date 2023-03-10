@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import Calendar from 'react-calendar';
-import CalendarContainer from '../components/CalendarContainer';
-//import 'react-calendar/dist/Calendar.css';
+import CalendarCustom from '../components/CalendarCustom';
+import SelectDevice from '../components/SelectDevice';
+
 import '../css/Calendar.css'
 function FileDown() {
   const [value, onChange] = useState(new Date());
@@ -27,23 +28,11 @@ function FileDown() {
   };
 
   return (
-    <div>
-        <h1>
-            Download CSV of Data
-        </h1>
-        <p>Idea is to be able to download telemtry data as a csv file from s3 bucket (AWS)</p>
-
-        <div style={{ display: 'flex', flexDirection: "column", alignItems: "center" }}>
-          <label>Start</label>
-          <CalendarContainer/>
-          <label>End</label>
-          <CalendarContainer/>
-        </div>
-
-       
-
+    <div style={{ minHeight: '100vh' }}>
+        <h1>Download Sensor Data</h1>
+        <CalendarCustom></CalendarCustom>
+        <SelectDevice></SelectDevice>
         
-
     </div>
   )
 }
