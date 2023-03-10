@@ -70,7 +70,7 @@ function App() {
             );
           })}
         </div>
-        <p>Click to download PDF of all data in collected by selected devices.</p>
+        <p>Click to download PDF of all data collected by selected devices.</p>
         <div style={{ display: 'flex', flexDirection: "row" }}>
           
           <Download></Download>
