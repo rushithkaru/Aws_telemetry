@@ -1,26 +1,28 @@
 import React, { useState } from "react";
 import '../css/Select.css'
 import { FiDownloadCloud } from "react-icons/fi";
+import { Button} from 'react-bootstrap';
 
-function Download() {
+
+function Download(props) {
   const handleClick = () => {
     // Do something when the button is clicked
-    console.log('Button clicked');
+    console.log(props.selecs);
   };
 
     return (
-      <button
-      style={{ border: '1px solid black', borderRadius: '4px', padding: '4px' ,marginLeft:'220px'}}
-      onClick={handleClick}
-    >
-      <FiDownloadCloud size={24} />
-      Download
-    </button>
+      <a href='file1.pdf' download='file1.pdf'>
+        <Button
+        style={{  borderRadius: '4px', padding: '4px' ,marginLeft:'220px'}}
+        onClick={handleClick}
+      >
+        <FiDownloadCloud size={24} />
+        Download
+        </Button>
+      </a>
     );
   }
   
-
-
 
 function App() {
   const [checkedList, setCheckedList] = useState([]);
@@ -73,7 +75,7 @@ function App() {
         <p>Click to download PDF of all data collected by selected devices.</p>
         <div style={{ display: 'flex', flexDirection: "row" }}>
           
-          <Download></Download>
+          <Download selecs={checkedList}></Download>
         </div>
         
       </div>
