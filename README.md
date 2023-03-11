@@ -12,7 +12,7 @@ Implementation of a web based device manager for IOT devices. This project was f
 4. React.JS
 5. Flask
 
-To simulate IOT devices I used an esp32 and a raspberry pi 4. Using these and AWS IOT core as an MQTT broker the devices send telemetry data to dynamodb via a sustom rule. Using a flask app an API was built that is connected to a react app for the varous features.
+To simulate IOT devices I used an esp32 and a raspberry pi 4. Using these and AWS IOT core as an MQTT broker the devices send telemetry data to dynamodb via a custom rule. Using a flask app an API was built that is connected to a react app for the varous features.
 
 ### Feature description
 
