@@ -28,7 +28,7 @@ Visualise device data updated in real time using the MQTT protocol. Pause the de
 
 #### Device Information
 
-Get a more detailed view of the devices and configure the home page.
+Detailed view of the devices and configure the home page.
 
 <img width="1297" alt="Screen Shot 2023-03-05 at 1 59 06 pm" src="https://user-images.githubusercontent.com/30048959/222939356-ac3498cd-cd95-48ec-b16b-9eb84d7e7f21.png">
 
@@ -42,7 +42,7 @@ Download a report of the signal data. Configure which devices and the date range
 
 #### Map
 
-Visualise the geographical location of the devices on the map and quickly get status of the device.
+Visualise the geographical location of the devices on the map and quickly get the status of the device.
 
 <img width="1234" alt="Screen Shot 2023-02-16 at 10 34 44 pm" src="https://user-images.githubusercontent.com/30048959/219363007-35bf53ae-bfff-4236-ac34-37887eb67b0c.png">
 
