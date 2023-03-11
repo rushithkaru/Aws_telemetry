@@ -5,20 +5,25 @@ import { Button} from 'react-bootstrap';
 
 
 function Download(props) {
+  const [loading, setLoading] = useState(false);
   const handleClick = () => {
-    // Do something when the button is clicked
+    
+    setLoading(true);
     console.log(props.selecs);
+    //Download fetch call here.
+    setLoading(true);
+    
   };
 
     return (
       <a href='file1.pdf' download='file1.pdf'>
-        <Button
+        {loading == false ?   <Button
         style={{  borderRadius: '4px', padding: '4px' ,marginLeft:'220px'}}
         onClick={handleClick}
       >
         <FiDownloadCloud size={24} />
-        Download
-        </Button>
+            Download
+        </Button>  : <></>}
       </a>
     );
   }
