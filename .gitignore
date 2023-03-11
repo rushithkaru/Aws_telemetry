@@ -3,3 +3,4 @@ Certs/
 flask-server/myvenv
 __pycache__
 firmware/src/certs.hpp
+creds.py

@@ -2,29 +2,39 @@ import React, { useState } from "react";
 import '../css/Select.css'
 import { FiDownloadCloud } from "react-icons/fi";
 import { Button} from 'react-bootstrap';
-
+import Spinner from 'react-bootstrap/Spinner';
 
 function Download(props) {
   const [loading, setLoading] = useState(false);
-  const handleClick = () => {
+   const  handleClick = async () => {
     
     setLoading(true);
     console.log(props.selecs);
     //Download fetch call here.
-    setLoading(true);
+    await fetch("/generatepdf",{
+      method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(props.selecs),
+    }).then(res => {console.log(res);setLoading(false);});
+    
     
   };
 
     return (
-      <a href='file1.pdf' download='file1.pdf'>
-        {loading == false ?   <Button
+      <div>
+        {loading === false ?   <Button
         style={{  borderRadius: '4px', padding: '4px' ,marginLeft:'220px'}}
         onClick={handleClick}
       >
+        <a href='file1.pdf' download='file1.pdf'>
+        
         <FiDownloadCloud size={24} />
             Download
-        </Button>  : <></>}
-      </a>
+         </a>
+        </Button>  : <label>Please wait.....</label>}
+      </div>
     );
   }
   
@@ -77,9 +87,9 @@ function App() {
             );
           })}
         </div>
-        <p>Click to download PDF of all data collected by selected devices.</p>
+        <p>Click to download PDF of all data collected by selected devices, during selected period.</p>
         <div style={{ display: 'flex', flexDirection: "row" }}>
-          
+          <Spinner animation="border" />
           <Download selecs={checkedList}></Download>
         </div>
         

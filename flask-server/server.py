@@ -9,6 +9,8 @@ import time as t
 import json
 from Device import Device
 from json import JSONEncoder
+import datetime as dt
+from Generate import Generate
 
 class CustomEncoder(json.JSONEncoder):
     def default(self, o):
@@ -133,6 +135,19 @@ def send_devices():
     devs = creat_device()
     #json_string = json.dumps([ob for ob in devs])
     return json.dumps(devs,indent=4, cls=CustomEncoder)
+
+@app.route("/generatepdf",methods=['GET', 'POST'])
+def generatepdf():
+    req = request.get_json()
+    start = dt.date(2023,3,7) 
+    end = dt.date(2023,3,10)
+    
+    devices = []
+    pdf_generator = Generate()
+    for r in req:
+        devices.append(int(r[-1]))
+    pdf_generator.create_report(devices,start,end)
+    return "hi"
 
 
 if __name__ == "__main__":
